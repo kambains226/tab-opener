@@ -21,24 +21,22 @@ class Browser:
     def open(self, url):
         if self.browser == 'chrome':
             parser = Parser()
-            
-            # webbrowser.open(url)
-            # if (len(parser.tab()) > 1):
-            #     for i in range(1, len(parser.tab())):
-            #         webbrowser.get(self.chrome_path).open(parser.tab()[i])
-            
             tab = (parser.tab())
             
-            
-
-            webbrowser.open(tab)
-            print("open")
+            self.multiple_tabs(tab)
             
         elif self.browser == 'firefox':
             webbrowser.get(self.firefox_path).open(url)
         else:
             webbrowser.open(url)
-
+    def multiple_tabs(self,tab):
+        if(' ' in tab):
+                tab = tab.split(' ')
+                for i in range(len(tab)):
+                    webbrowser.open(tab[i])
+        else:
+            webbrowser.open(tab)
+        
 
 # arguments = sys.argv[1:]
 #gets what to open from the command line
@@ -46,18 +44,13 @@ class Parser:
 
     #can get a group of items and return them into an array
     def tab(self):
-        # parser = argparse.ArgumentParser(description='Open a url in browser')
-        # parser.add_argument('url', type=str, help='url to open')
-        # parser.add_argument('--browser', type=str, help='browser to use')
-        # args = parser.parse_args(arguments)
-        # return args
-
+    
         self.preset = Preset( sys.argv[1:])
-        
-        
+       
         return self.to_string()
 
     def to_string(self):
+
         return ' '.join(self.preset.tabs)
         
     
@@ -82,8 +75,11 @@ class Preset :
             if self.string_preset =='uni':
 
                 self.tabs.append("https://nile.northampton.ac.uk/ultra/course")
-
+                self.tabs.append("https://mynorthamptonac-my.sharepoint.com/my?id=%2Fpersonal%2Fkameron%5Fbains23%5Fmy%5Fnorthampton%5Fac%5Fuk%2FDocuments%2Fyear%202")
+                self.tabs.append("https://chatgpt.com/")
+                
                 #need to make it so it opens more tabs
+        
                 
                 
     
