@@ -1,4 +1,4 @@
-import os
+
 import sys
 # import argparse
 import webbrowser
@@ -10,29 +10,14 @@ import json
 PRESET_FILE = 'preset.json'
 #browser only 
 class Browser:
-    def __init__(self, browser):
-        self.browser = browser
+   
         #sees what opearting system is being used
-        if os.name == 'nt':# windows
-            self.chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
-            self.firefox_path = 'C:/Program Files/Mozilla Firefox/firefox.exe %s'
-            
-        elif os.name == 'posix':# linux
-            self.chrome_path = 'open -a /Applications/Google\\ Chrome.app %s'
-            self.firefox_path = 'open -a /Applications/Firefox.app %s'
+        
 
         
         
     def open(self, url):
-        
-        if self.browser == 'chrome':
-            
-            self.run_tab()
-        elif self.browser == 'firefox':
-            webbrowser.get(self.firefox_path).open(url)
-        else:
-            webbrowser.open(url)
-
+        self.run_tab() #runs it in your default browser
     #is what gets the code to run the tabs
     def run_tab(self):
         parser = Parser()
@@ -90,17 +75,6 @@ class Preset :
         #appeends the links to the self.tabs array
         # opesn a json file  
         def open_json(self):
-
-            # if self.string_preset =='uni':
-
-            #     self.tabs.append("https://nile.northampton.ac.uk/ultra/course")
-            #     self.tabs.append("https://mynorthamptonac-my.sharepoint.com/my?id=%2Fpersonal%2Fkameron%5Fbains23%5Fmy%5Fnorthampton%5Fac%5Fuk%2FDocuments%2Fyear%202")
-            #     self.tabs.append("https://chatgpt.com/")
-                
-            #     #need to make it so it opens more tabs
-            # else:
-            #     print("this will be the new preset name")
-            
             try:
                 with open(PRESET_FILE) as f:
                     data = json.load(f)
@@ -111,7 +85,7 @@ class Preset :
                     except KeyError as e:
 
                         new_tabs = [] #used to add new tabs to a json file
-                        stop = False
+                        
                         while True:
 
                             new_tabs.append(input("enter a link you want to add to preset press N to stop\n"))
@@ -123,13 +97,25 @@ class Preset :
                         self.write_json(new_tabs)
                         
             except FileNotFoundError:
-                print("No preset file found")
+                new_tabs = [] #used to add new tabs to a json file
+               #used to get all the links the user wants for that preset 
+                while True:
+
+                    new_tabs.append(input("enter a link you want to add to preset press N to stop\n"))
+                    if(new_tabs[-1] == 'N' or new_tabs[-1] == 'n'): 
+                        new_tabs.pop() #removes the N from the array
+                        break
+
+
+                self.write_json(new_tabs)
                 
             
         def write_json(self,links):
             link= ''
             for i in links:
                 link += i + ' '
+            print(link[-1])
+            link=link[:-1] #remove the spae on the end of the string
             try:
                 with open(PRESET_FILE,'r') as f:
                     data = json.load(f)
@@ -155,7 +141,7 @@ class Preset :
     
       
 if __name__ == '__main__':
-    browser = Browser('chrome')
+    browser = Browser()
     if len(sys.argv) > 1:
         browser.open(sys.argv[1])
     else:
