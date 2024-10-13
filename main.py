@@ -76,8 +76,11 @@ class Preset :
         # opesn a json file  
         def open_json(self):
             try:
+                print('error')
                 with open(PRESET_FILE) as f:
+                    
                     data = json.load(f)
+                    print('eler')
                     
                     try:
                         self.tabs.append(data[self.string_preset])
@@ -95,7 +98,9 @@ class Preset :
 
 
                         self.write_json(new_tabs)
-                        
+                    except json.json.JSONDecodeError as e:
+                        print("JSON decoding error")
+                        data= {}
             except FileNotFoundError:
                 new_tabs = [] #used to add new tabs to a json file
                #used to get all the links the user wants for that preset 
@@ -111,6 +116,7 @@ class Preset :
                 
             
         def write_json(self,links):
+
             link= ''
             for i in links:
                 link += i + ' '
