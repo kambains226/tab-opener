@@ -1,9 +1,9 @@
 
 import sys
-# import argparse
+
 import webbrowser
 import json
-#class that gets it to the browser 
+
 
 
 #path to preset file
@@ -11,10 +11,6 @@ PRESET_FILE = 'preset.json'
 #browser only 
 class Browser:
    
-        #sees what opearting system is being used
-        
-
-        
         
     def open(self, url):
         self.run_tab() #runs it in your default browser
@@ -136,15 +132,9 @@ class Preset :
                 json.dump(data, f, indent=4)
                     # data = json.load(f)
             self.tabs.append(data[self.string_preset])
-                    
-            
-                # data = {}
-            # data[self.string_preset] = self.tabs
-                
-            # f.write(data)   
              
     
-      
+
 if __name__ == '__main__':
     browser = Browser()
     if len(sys.argv) > 1:
