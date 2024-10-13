@@ -69,11 +69,10 @@ class Preset :
 
                 self.open_json()
             
-            # self.open()
-
+           
             
         #appeends the links to the self.tabs array
-        # opesn a json file  
+        # opena a json file  
         def open_json(self):
 
             try:         
@@ -86,41 +85,35 @@ class Preset :
                         data = json.load(f)
                         
                 except :
-                    print("JSON decoding error")
+                    #if no json {} creates one by setting it to a json
                     data= {}
                 try:
                     self.tabs.append(data[self.string_preset])
 
                 except KeyError as e:
 
-                    new_tabs = [] #used to add new tabs to a json file
+                    self.append()
+
+
                     
-                    while True:
-
-                        new_tabs.append(input("enter a link you want to add to preset press N to stop\n"))
-                        if(new_tabs[-1] == 'N' or new_tabs[-1] == 'n'):
-                            new_tabs.pop() #removes the N from the array
-                            break
-
-
-                    self.write_json(new_tabs)
-                # except json.json.JSONDecodeError as e:
-                #     print("JSON decoding error")
-                #     data= {}
+            #creates a new json file if there is no file
             except FileNotFoundError:
-                new_tabs = [] #used to add new tabs to a json file
-               #used to get all the links the user wants for that preset 
-                while True:
-
-                    new_tabs.append(input("enter a link you want to add to preset press N to stop\n"))
-                    if(new_tabs[-1] == 'N' or new_tabs[-1] == 'n'): 
-                        new_tabs.pop() #removes the N from the array
-                        break
+               
+               self.append()
 
 
-                self.write_json(new_tabs)
                 
-            
+                
+        def append(self):
+            new_tabs = [] #used to add new tabs to a json file
+               #used to get all the links the user wants for that preset 
+            while True:
+
+                new_tabs.append(input("enter a link you want to add to preset press N to stop\n"))
+                if(new_tabs[-1] == 'N' or new_tabs[-1] == 'n'): 
+                    new_tabs.pop() #removes the N from the array
+                    break
+            self.write_json(new_tabs)
         def write_json(self,links):
 
             link= ''
@@ -149,7 +142,7 @@ class Preset :
             # data[self.string_preset] = self.tabs
                 
             # f.write(data)   
-                
+             
     
       
 if __name__ == '__main__':
