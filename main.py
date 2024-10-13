@@ -75,7 +75,7 @@ class Preset :
         #appeends the links to the self.tabs array
         # opesn a json file  
         def open_json(self):
-            try:
+            try:         
                 with open(PRESET_FILE) as f:
                     data = json.load(f)
                     
