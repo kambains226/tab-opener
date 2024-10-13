@@ -79,32 +79,34 @@ class Preset :
             try:         
 
             
-                print('error')
-
-                with open(PRESET_FILE) as f:
-                    
-                    data = json.load(f)
-                    print('eler')
-                    
-                    try:
-                        self.tabs.append(data[self.string_preset])
-
-                    except KeyError as e:
-
-                        new_tabs = [] #used to add new tabs to a json file
+                
+                try:
+                    with open(PRESET_FILE,'r') as f:
                         
-                        while True:
+                        data = json.load(f)
+                        
+                except :
+                    print("JSON decoding error")
+                    data= {}
+                try:
+                    self.tabs.append(data[self.string_preset])
 
-                            new_tabs.append(input("enter a link you want to add to preset press N to stop\n"))
-                            if(new_tabs[-1] == 'N' or new_tabs[-1] == 'n'):
-                                new_tabs.pop() #removes the N from the array
-                                break
+                except KeyError as e:
+
+                    new_tabs = [] #used to add new tabs to a json file
+                    
+                    while True:
+
+                        new_tabs.append(input("enter a link you want to add to preset press N to stop\n"))
+                        if(new_tabs[-1] == 'N' or new_tabs[-1] == 'n'):
+                            new_tabs.pop() #removes the N from the array
+                            break
 
 
-                        self.write_json(new_tabs)
-                    except json.json.JSONDecodeError as e:
-                        print("JSON decoding error")
-                        data= {}
+                    self.write_json(new_tabs)
+                # except json.json.JSONDecodeError as e:
+                #     print("JSON decoding error")
+                #     data= {}
             except FileNotFoundError:
                 new_tabs = [] #used to add new tabs to a json file
                #used to get all the links the user wants for that preset 
